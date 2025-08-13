@@ -1,0 +1,66 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 250MB
+      max-request-size: 250MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/board_demo_database
+    username: root
+    password: 040907
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      password: 040907
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: 1000
+        shutdown-timeout: 1000
+  # 彩色输出输出日志
+  output:
+    ansi:
+      enabled: ALWAYS
+
+
+logging:
+  level:
+    root: INFO
+    com.alibaba.cloud: DEBUG
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deletedFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+huawei:
+  obs:
+    accessKey: HPUAYFGA5JPHOOKTLH2L
+    secretKey: qNwM8vDxiwTQbzGKn4yjqp0Fgey4GFC2T1qJCZ4L
+    endPoint: obs.ap-southeast-1.myhuaweicloud.com
+    publicBucket: dadibadi-test-public
+    privateBucket: dadibadi-test-private
+
+
+# 健康检查与优雅停机 https://blog.csdn.net/alinyua/article/details/80009435
+# 检查：http://localhost:8187/actuator/health
+# 停机：curl -X "POST" "http://localhost:8187/actuator/shutdown" -H "Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8"
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
